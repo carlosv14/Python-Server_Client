@@ -15,4 +15,8 @@ class User:
 
     @staticmethod
     def emailParse(u):
-        return str.encode('<p>Nombre: '+ u.username + '</p>' + '<p>User name: '+ u.name +  '</p>' + '<p>Email: '+ u.email + '</p>' +'<p>ID: '+  u.id + '</p>' +'<p>Birth Date: ' +u.f_nac +'</p>' + '<p>Picture: ' +u.foto +'</p>')
+        return str.encode('<p>Nombre: '+ u.username + '</p>' + '<p>User name: '+ u.name +  '</p>' + '<p>Email: '+ u.email + '</p>' +'<p>ID: '+  u.id + '</p>' +'<p>Birth Date: ' +u.f_nac +'</p>' + '<p>Picture: ' +u.foto+ ":" +'</p>')
+
+    @staticmethod
+    def imgSource(u):
+        return str.encode(u.foto)

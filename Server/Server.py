@@ -5,18 +5,19 @@ import Json_Manager
 import sys
 import os.path
 import requests
+import re
 
 def send_simple_message(to,text,url):
-
+    filename = re.split("\\\\", url)
+    filename.reverse()
     return requests.post(
         "https://api.mailgun.net/v3/sandboxc53a54ee60d74130ad038e8fb6c64c34.mailgun.org/messages",
         auth=("api", "key-9b2be08330ce6fe41a9a15a950f624c0"),
         files=[("inline", open(url,"rb"))],
-        data={"from": "Excited User <mailgun@sandboxc53a54ee60d74130ad038e8fb6c64c34.mailgun.org>",
-              "to": "cvarela1496@gmail.com",
-              "subject": "Hello",
-              "text": "Testing some Mailgun awesomness!",
-              "html": '<html>' + text + 'Inline image here: <img src="cid:file.jpg"></html>'})
+        data={"from": "User Manager <mailgun@sandboxc53a54ee60d74130ad038e8fb6c64c34.mailgun.org>",
+              "to": to,
+              "subject": "User Information",
+              "html": '<html>  <body>' + text + '<img src='"cid:" +filename[0] +' style=width:128px;height:128px;>  </body></html>'})
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind((socket.gethostname(), 399))
@@ -109,9 +110,11 @@ while op!=5:
         if op==4:
             connection.sendall(b'Enter User Name: ')
             searchuser = str(connection.recv(1024),'utf-8')
+            connection.sendall(b'Enter Email Recipient: ')
+            r = str(connection.recv(1024),'utf-8')
             u = searchUser(users,searchuser)
             if u!= None:
-                send_simple_message('cvarela1496@gmail.com',str(User.User.emailParse(u),'utf-8'))
+                send_simple_message(r,str(User.User.emailParse(u),'utf-8'),str(User.User.imgSource(u),"utf-8"))
                 op =-1
             else:
                 connection.sendall(b'Not Found ')

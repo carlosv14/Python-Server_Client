@@ -3,9 +3,11 @@ import socket
 def main():
     op = 0
     while op != 5:
-        print('1. Add User:')
-        print('2. Search User:')
-        print('3. Delete User:')
+        print('1. Add User')
+        print('2. Search User')
+        print('3. Delete User')
+        print('4. Send User Info')
+        print('5. Exit')
         op = int(input('Option: '))
         if op == 1:
             try:
@@ -80,6 +82,9 @@ def main():
                 while True:
                     data = str(sock.recv(1024),'utf-8')
                     if data =='Enter User Name: ':
+                        info = input(data)
+                        sock.sendall(str.encode(info))
+                    elif data == 'Enter Email Recipient: ':
                         info = input(data)
                         sock.sendall(str.encode(info))
                     else:
