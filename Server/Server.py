@@ -6,6 +6,7 @@ import sys
 import os.path
 import requests
 import re
+import string
 
 def send_simple_message(to,text,url):
     filename = re.split("\\\\", url)
@@ -20,7 +21,7 @@ def send_simple_message(to,text,url):
               "html": '<html>  <body>' + text + '<img src='"cid:" +filename[0] +' style=width:128px;height:128px;>  </body></html>'})
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serversocket.bind((socket.gethostname(), 399))
+serversocket.bind(('localhost', 399))
 serversocket.listen(5)
 users = []
 json_m = Json_Manager.JsonManager('users.txt')
@@ -46,37 +47,48 @@ while op!=5:
                 user = User.User()
 
                 while True:
-                    connection.sendall(b'Enter User Name: ')
+                    connection.sendall(b'Enter User Name: \n ')
                     username = str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in username:
+                        username = re.split("\r\n", username)[0]
                     if Validation.Validation.Unique(users,username,0) and username !='':
                         user.username = username
                         break
                 while True:
-                    connection.sendall(b'Enter Name: ')
+                    connection.sendall(b'Enter Name: \n')
                     name =  str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in name:
+                        name = re.split("\r\n", name)[0]
+
                     if name !='':
                         user.name = name
                         break
                 while True:
-                    connection.sendall(b'Enter E-mail: ')
+                    connection.sendall(b'Enter E-mail: \n')
                     email =  str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in email:
+                        email = re.split("\r\n", email)[0]
                     if Validation.Validation.validEmail(email) and email !='' and Validation.Validation.Unique(users,email,1):
                         user.email = email
                         break
                 while True:
-                    connection.sendall(b'Enter ID: ')
+                    connection.sendall(b'Enter ID: \n')
                     ID =  str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in ID:
+                        ID = re.split("\r\n", ID)[0]
                     if Validation.Validation.validID(ID) and ID !='' and Validation.Validation.Unique(users,ID,2):
                         user.id = ID
                         break
                 while True:
-                    connection.sendall(b'Enter Birth Date: ')
+                    connection.sendall(b'Enter Birth Date: \n')
                     fecha_nac =  str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in fecha_nac:
+                        fecha_nac = re.split("\r\n", fecha_nac)[0]
                     if Validation.Validation.validDate(fecha_nac) and fecha_nac !='':
                         user.f_nac = fecha_nac
                         break
                 while True:
-                    connection.sendall(b'Enter Profile Image: ')
+                    connection.sendall(b'Enter Profile Image: \n')
                     pf =  str(connection.recv(1024),'utf-8')
                     user.foto = pf
                     if user.foto!="":
@@ -84,28 +96,32 @@ while op!=5:
 
                 users.append(user)
                 print("No more info")
-                connection.sendall(b'Success')
+                connection.sendall(b'Success\n')
                 op = -1
         if op == 2 :
-            connection.sendall(b'Enter User Name: ')
+            connection.sendall(b'Enter User Name: \n')
             searchuser = str(connection.recv(1024),'utf-8')
+            if "\r\n"  in searchuser:
+                searchuser = re.split("\r\n", searchuser)[0]
             u = searchUser(users,searchuser)
             if u != None:
                 connection.sendall(User.User.show(u))
                 op = -1
             else:
-                connection.sendall(b'Not Found ')
+                connection.sendall(b'Not Found \n')
                 op=-1
         if op==3:
-            connection.sendall(b'Enter User Name: ')
+            connection.sendall(b'Enter User Name: \n')
             searchuser = str(connection.recv(1024),'utf-8')
+            if "\r\n"  in searchuser:
+                searchuser = re.split("\r\n", searchuser)[0]
             u = searchUser(users,searchuser)
             if u!= None:
                 users.remove(u)
-                connection.sendall(b'Success ')
+                connection.sendall(b'Success \n')
                 op=-1
             else:
-                connection.sendall(b'Not Found ')
+                connection.sendall(b'Not Found \n')
                 op=-1
         if op==4:
             connection.sendall(b'Enter User Name: ')

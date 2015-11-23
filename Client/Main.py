@@ -12,17 +12,17 @@ def main():
         if op == 1:
             try:
                 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                server_address = (socket.gethostname(),399)
+                server_address = ('localhost',399)
                 sock.connect(server_address)
                 sock.sendall(str.encode(str(op)))
 
                 data = ''
-                while data != 'Success':
+                while data != 'Success\n':
                     data = str(sock.recv(1024),'utf-8')
-                    if data!='Success':
+                    if data!='Success\n':
                         info = input(data)
                         sock.sendall(str.encode(info))
-                    elif data == 'Success':
+                    elif data == 'Success\n':
                         op=-1
 
             finally:
@@ -31,14 +31,14 @@ def main():
         if op == 2:
             try:
                 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                server_address = ('CarlosV',399)
+                server_address = ('localhost',399)
                 sock.connect(server_address)
                 print(str(op))
                 sock.sendall(str.encode(str(op)))
 
                 while True:
                     data = str(sock.recv(1024),'utf-8')
-                    if data =='Enter User Name: ':
+                    if data =='Enter User Name: \n':
                         info = input(data)
                         sock.sendall(str.encode(info))
                     else:
@@ -53,14 +53,14 @@ def main():
         if op == 3:
             try:
                 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                server_address = ('CarlosV',399)
+                server_address = ('localhost',399)
                 sock.connect(server_address)
                 print(str(op))
                 sock.sendall(str.encode(str(op)))
 
                 while True:
                     data = str(sock.recv(1024),'utf-8')
-                    if data =='Enter User Name: ':
+                    if data =='Enter User Name: \n':
                         info = input(data)
                         sock.sendall(str.encode(info))
                     else:
@@ -74,7 +74,7 @@ def main():
         if op == 4:
             try:
                 sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-                server_address = ('CarlosV',399)
+                server_address = ('localhost',399)
                 sock.connect(server_address)
                 print(str(op))
                 sock.sendall(str.encode(str(op)))
