@@ -81,10 +81,10 @@ def main():
 
                 while True:
                     data = str(sock.recv(1024),'utf-8')
-                    if data =='Enter User Name: ':
+                    if data =='Enter User Name: \n':
                         info = input(data)
                         sock.sendall(str.encode(info))
-                    elif data == 'Enter Email Recipient: ':
+                    elif data == 'Enter Email Recipient: \n':
                         info = input(data)
                         sock.sendall(str.encode(info))
                     else:

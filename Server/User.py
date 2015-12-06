@@ -10,12 +10,12 @@ class User:
 
     @staticmethod
     def show(u):
-       return str.encode('Nombre: '+ u.username + '\n' + 'User name: '+ u.name +  '\n' + 'Email: '+ u.email + '\n' +'ID: '+  u.id + '\n' +'Birth Date: ' +u.f_nac +'\n' + 'Picture: ' +u.foto)
+       return str.encode('Nombre: '+ u.name + '\n' + 'User name: '+ u.username +  '\n' + 'Email: '+ u.email + '\n' +'ID: '+  u.id + '\n' +'Birth Date: ' +u.f_nac +'\n' + 'Picture: ' +u.foto)
 
 
     @staticmethod
     def emailParse(u):
-        return str.encode('<p>Nombre: '+ u.username + '</p>' + '<p>User name: '+ u.name +  '</p>' + '<p>Email: '+ u.email + '</p>' +'<p>ID: '+  u.id + '</p>' +'<p>Birth Date: ' +u.f_nac +'</p>' + '<p>Picture: ' +u.foto+ ":" +'</p>')
+        return str.encode('<p>Nombre: '+ u.name + '</p>' + '<p>User name: '+ u.username +  '</p>' + '<p>Email: '+ u.email + '</p>' +'<p>ID: '+  u.id + '</p>' +'<p>Birth Date: ' +u.f_nac +'</p>' + '<p>Picture: ' +u.foto+ ":" +'</p>')
 
     @staticmethod
     def imgSource(u):

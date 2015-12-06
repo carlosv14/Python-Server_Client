@@ -90,6 +90,8 @@ while op!=5:
                 while True:
                     connection.sendall(b'Enter Profile Image: \n')
                     pf =  str(connection.recv(1024),'utf-8')
+                    if "\r\n"  in pf:
+                        pf = re.split("\r\n", pf)[0]
                     user.foto = pf
                     if user.foto!="":
                         break
@@ -124,16 +126,20 @@ while op!=5:
                 connection.sendall(b'Not Found \n')
                 op=-1
         if op==4:
-            connection.sendall(b'Enter User Name: ')
+            connection.sendall(b'Enter User Name: \n')
             searchuser = str(connection.recv(1024),'utf-8')
-            connection.sendall(b'Enter Email Recipient: ')
+            if "\r\n"  in searchuser:
+                searchuser = re.split("\r\n", searchuser)[0]
+            connection.sendall(b'Enter Email Recipient: \n')
             r = str(connection.recv(1024),'utf-8')
+            if "\r\n"  in r:
+                r = re.split("\r\n", r)[0]
             u = searchUser(users,searchuser)
             if u!= None:
                 send_simple_message(r,str(User.User.emailParse(u),'utf-8'),str(User.User.imgSource(u),"utf-8"))
                 op =-1
             else:
-                connection.sendall(b'Not Found ')
+                connection.sendall(b'Not Found \n')
                 op=-1
     except:
         print(sys.exc_info()[0])
